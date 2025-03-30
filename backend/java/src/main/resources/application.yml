@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: java
+  datasource:
+    url: jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=gbd1bb7e91ab202_test_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+    username: Junho
+    password: Jjunjun335276!
+    driver-class-name: oracle.jdbc.OracleDriver
+
+server:
+  port: 20012
+

@@ -1,0 +1,51 @@
+header{
+  border-top: 4px solid #01ff4d;
+  border-bottom: 1px solid #c5d5c6;
+  
+  height: 80px;
+}
+
+.header-container{
+  width: 70vw;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.3rem;
+}
+
+/* 일정 이상 작아지면 검색창부터 없앰 */
+.search-section{
+  margin: 0 10px;
+  flex-grow: 1;
+  position: relative;
+}
+.search-input{
+  width: 100%;
+  padding-top: 6px;
+  padding-bottom: 5px;
+  padding-left: 35px;
+  border: 1px solid green;
+  border-radius: 15px;
+  font-size: 18px;
+
+}
+#searchIcon{
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 8px;
+  left: 7px;
+
+}
+.user-buttons{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.section-none{
+  display: none;
+}
+
