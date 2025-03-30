@@ -64,5 +64,5 @@ out/
 
 ## config files ##
 .properties
-.yml
+*.yml
 
