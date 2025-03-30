@@ -39,4 +39,5 @@ out/
 
 ## config files ##
 .properties
-.yml
+*.yml
+application.yml
