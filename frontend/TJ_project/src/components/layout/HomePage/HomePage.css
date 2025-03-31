@@ -2,7 +2,9 @@
   font-size: 38px;
 }
 
-.home-title{
+.home-title {
   display: flex;
   justify-content: space-between;
+  padding: 1.5em;
+  border-bottom: 1px solid #c5d5c6;
 }

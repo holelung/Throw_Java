@@ -1,0 +1,33 @@
+/* board 영역 */
+.board-container {
+  border-bottom: 1px solid #c5d5c6;
+  padding: 1em 1.5em;
+}
+
+.board-data {
+  display: flex;
+}
+
+.board-stats {
+  min-width: 100px;
+}
+
+.board-title {
+  font-size: 22px;
+  margin-bottom: 3px;
+  color: hsl(237, 50%, 45%);
+}
+
+.board-title:hover {
+  color: hsl(237, 50%, 32%);
+}
+
+.board-content {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+
+.tags-and-info {
+  display: flex;
+  justify-content: space-between;
+}

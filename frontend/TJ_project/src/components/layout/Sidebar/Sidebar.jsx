@@ -4,16 +4,12 @@ import NavItem from "./NavItem";
 import {
   faHouse,
   faClipboardQuestion,
-  faBookmark
+  faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-
-
-
-
-
 const Sidebar = () => {
-  const navi = useNavigate
+  const navi = useNavigate();
+
   return (
     <>
       <div className="side-navbar">
@@ -21,10 +17,16 @@ const Sidebar = () => {
           <NavItem onClick={() => navi("/")} icon={faHouse} size={"l"}>
             Home
           </NavItem>
-          <NavItem onClick={() => navi("/questions")} icon={faClipboardQuestion} size={"lg"}>
+          <NavItem
+            onClick={() => navi("/questions")}
+            icon={faClipboardQuestion}
+            size={"lg"}
+          >
             Questions
           </NavItem>
-          <NavItem onClick={() => navi("/saves")} icon={faBookmark} size={"lg"}>Saves</NavItem>
+          <NavItem onClick={() => navi("/saves")} icon={faBookmark} size={"lg"}>
+            Saves
+          </NavItem>
         </ul>
       </div>
     </>

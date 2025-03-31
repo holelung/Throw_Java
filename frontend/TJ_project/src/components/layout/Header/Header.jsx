@@ -1,20 +1,20 @@
 import { LeafIcon } from "../../Icons/LeafIcon";
 import { styled } from "styled-components";
 
-import './Header.css';
+import "./Header.css";
 import BasicButton from "../../modules/Button/BasicButton";
+import { useNavigate } from "react-router-dom";
 
 const StyledTitle = styled.p`
-  font-size:32px;
-  text-align:center;
+  font-size: 32px;
+  text-align: center;
   padding: 5px 7px;
   margin: 3px 5px;
-  
 `;
 
-
-
 const Header = () => {
+  const navi = useNavigate();
+
   return (
     <>
       <header className="h-16 px-4">
@@ -46,10 +46,17 @@ const Header = () => {
           </div>
           <div className="user-buttons ">
             <div className="before-sign-in">
-              <BasicButton >sign-in</BasicButton>
-              <BasicButton color={"#336dff"}>sign Up</BasicButton>
+              {/* 로그인 이전 */}
+              <BasicButton onClick={() => navi("/sign-in")}>
+                sign-in
+              </BasicButton>
+              <BasicButton onClick={() => navi("/sign-up")} color={"#336dff"}>
+                sign Up
+              </BasicButton>
             </div>
-            <div className="after-sign-in section-none"></div>
+            <div className="after-sign-in section-none">
+              {/* 로그인 이후 */}
+            </div>
           </div>
         </div>
       </header>
