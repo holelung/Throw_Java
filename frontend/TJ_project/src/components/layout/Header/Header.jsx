@@ -3,7 +3,10 @@ import { styled } from "styled-components";
 
 import "./Header.css";
 import BasicButton from "../../modules/Button/BasicButton";
-import { useNavigate } from "react-router-dom";
+
+import { useState } from "react";
+import SignIn from "../Auth/SignIn/SignIn";
+import SignUp from "../Auth/SignUp/SignUp";
 
 const StyledTitle = styled.p`
   font-size: 32px;
@@ -13,7 +16,8 @@ const StyledTitle = styled.p`
 `;
 
 const Header = () => {
-  const navi = useNavigate();
+  const [isSignInOpen, setSignInOpen] = useState(false);
+  const [isSignUpOpen, setSignUpOpen] = useState(false);
 
   return (
     <>
@@ -47,19 +51,24 @@ const Header = () => {
           <div className="user-buttons ">
             <div className="before-sign-in">
               {/* 로그인 이전 */}
-              <BasicButton onClick={() => navi("/sign-in")}>
+              <BasicButton onClick={() => setSignInOpen(true)}>
                 sign-in
               </BasicButton>
-              <BasicButton onClick={() => navi("/sign-up")} color={"#336dff"}>
+              <BasicButton
+                onClick={() => setSignUpOpen(true)}
+                color={"#336dff"}
+              >
                 sign Up
               </BasicButton>
             </div>
-            <div className="after-sign-in section-none">
-              {/* 로그인 이후 */}
-            </div>
+
+            {/* 로그인 이후 */}
+            <div className="after-sign-in section-none"></div>
           </div>
         </div>
       </header>
+      <SignIn isOpen={isSignInOpen} onClose={() => setSignInOpen(false)} />
+      <SignUp isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)} />
     </>
   );
 };

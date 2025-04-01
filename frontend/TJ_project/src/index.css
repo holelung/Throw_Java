@@ -1,22 +1,24 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'BMYEONSUNG';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMYEONSUNG.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: sans-serif;
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMYEONSUNG.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-
-*{
+* {
   box-sizing: border-box;
-  font-family:'BMYEONSUNG';
+  font-family: "BMYEONSUNG";
 }
 
 a {
   text-decoration: none;
 }
 
-ul, li, ol {
+ul,
+li,
+ol {
   list-style: none;
 }
