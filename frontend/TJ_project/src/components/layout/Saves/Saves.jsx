@@ -1,12 +1,23 @@
+import { useNavigate } from "react-router-dom";
+import Board from "../../modules/Board/Board";
+import BasicButton from "../../modules/Button/BasicButton";
+
 const Saves = () => {
+  const navi = useNavigate();
   return (
     <>
-      <h2>여긴 저장한거 나오지롱</h2>
+      <div className="title-area">
+        <div className="home-title">
+          <p>Save Questions</p>
+          <BasicButton color={"#ffcd64"} onClick={() => navi("/askQuestion")}>
+            Ask Question
+          </BasicButton>
+        </div>
+
+        <Board></Board>
+      </div>
     </>
-
   );
-
-
-}
+};
 
 export default Saves;

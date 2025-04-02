@@ -1,37 +1,40 @@
-import BasicButton from "../../../modules/Button/BasicButton";
+import { LeafIcon } from "../../../Icons/LeafIcon";
+import BasicInput from "../../../modules/Input/BasicInput";
 import "./SignIn.css";
+import BasicButton from "../../../modules/Button/BasicButton";
 
-const SignIn = ({ isOpen, onClose }) => {
-  console.log("여기는 SignIn" + isOpen);
-  if (!isOpen) return null;
+const SignIn = () => {
+  function clickSignIn() {
+    console.log("SignIn btn clicked");
+  }
 
   return (
     <>
-      <div className="modal-overlay">
-        <div className="modal-box">
-          <div className="modal-header flex items-center justify-between mb-3 text-2xl">
-            <h2>로그인</h2>
-            <button className="close-button" onClick={onClose}>
-              x
-            </button>
+      <div className="w-[100%] h-[80vh] flex flex-row items-center justify-center">
+        <form className="mt-[30px] bg-white flex flex-col  w-[400px] p-[20px] border border-green-700 rounded-2xl">
+          <div className="flex justify-between items-center pr-3">
+            <h1 className="text-3xl pl-3">sign in</h1>
+            <LeafIcon size={"3x"}></LeafIcon>
           </div>
-          <form>
+          <BasicInput type={"text"} id={"inputId"}>
+            아이디
+          </BasicInput>
+          <BasicInput type={"password"} id={"inputPassword"}>
+            비밀번호
+          </BasicInput>
+
+          <div className="form-check text-start my-3">
             <input
-              type="text"
-              placeholder="아이디"
-              className="w-full p-3 mb-2 border-2 rounded-xl border-gray-600"
-            />{" "}
-            <input
-              type="password"
-              placeholder="비밀번호"
-              className="w-full p-3 mb-2 border-2 border-gray-600 rounded-xl text-gray-800 placeholder-gray-400 bg-white "
-              style={{ color: "black" }}
+              className="form-check-input"
+              type="checkbox"
+              value="remember-me"
+              id="flexCheckDefault"
             />
-            <div className="flex justify-end">
-              <BasicButton color={"#33ffc5"}>sign-in</BasicButton>
-            </div>
-          </form>
-        </div>
+            <label className="form-check-label">Remember me</label>
+          </div>
+          <BasicButton onClick={clickSignIn}>Sign In</BasicButton>
+          <p className="mt-5 mb-3 text-body-secondary">© 2017–2024</p>
+        </form>
       </div>
     </>
   );

@@ -1,9 +1,9 @@
 import "./Board.css";
 
-const Board = () => {
+const Board = ({ onClick }) => {
   return (
     <>
-      <div className="board-container">
+      <div className="board-container" onClick={onClick}>
         <div className="board-data">
           <div className="board-stats">
             <p>1 votes</p>

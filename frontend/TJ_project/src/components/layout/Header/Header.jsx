@@ -7,6 +7,7 @@ import BasicButton from "../../modules/Button/BasicButton";
 import { useState } from "react";
 import SignIn from "../Auth/SignIn/SignIn";
 import SignUp from "../Auth/SignUp/SignUp";
+import { useNavigate } from "react-router-dom";
 
 const StyledTitle = styled.p`
   font-size: 32px;
@@ -16,14 +17,18 @@ const StyledTitle = styled.p`
 `;
 
 const Header = () => {
-  const [isSignInOpen, setSignInOpen] = useState(false);
+  const navi = useNavigate();
+
   const [isSignUpOpen, setSignUpOpen] = useState(false);
 
   return (
     <>
-      <header className="h-16 px-4">
+      <header className="h-16 px-4 bg-white">
         <div className="header-container">
-          <div className="logo-section flex flex-row items-center ">
+          <div
+            className="logo-section flex flex-row items-center "
+            onClick={() => navi("/")}
+          >
             <LeafIcon size={"3x"}></LeafIcon>
             <StyledTitle>ThrowJava</StyledTitle>
           </div>
@@ -51,12 +56,12 @@ const Header = () => {
           <div className="user-buttons ">
             <div className="before-sign-in">
               {/* 로그인 이전 */}
-              <BasicButton onClick={() => setSignInOpen(true)}>
+              <BasicButton onClick={() => navi("/sign-in")}>
                 sign-in
               </BasicButton>
               <BasicButton
                 onClick={() => setSignUpOpen(true)}
-                color={"#336dff"}
+                color={"#9be0fd"}
               >
                 sign Up
               </BasicButton>
@@ -67,7 +72,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <SignIn isOpen={isSignInOpen} onClose={() => setSignInOpen(false)} />
+
       <SignUp isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)} />
     </>
   );

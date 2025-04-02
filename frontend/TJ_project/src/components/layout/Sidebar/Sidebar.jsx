@@ -12,7 +12,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="side-navbar">
+      <div className="side-navbar bg-white">
         <ul className="nav-item-container">
           <NavItem onClick={() => navi("/")} icon={faHouse} size={"l"}>
             Home

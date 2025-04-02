@@ -1,4 +1,5 @@
 import BasicButton from "../../../modules/Button/BasicButton";
+import BasicInput from "../../../modules/Input/BasicInput";
 import "./SignUp.css";
 
 const SignUp = ({ isOpen, onClose }) => {
@@ -14,19 +15,23 @@ const SignUp = ({ isOpen, onClose }) => {
             </button>
           </div>
           <form>
-            <input
-              type="text"
-              placeholder="아이디"
-              className="w-full p-3 mb-2 border-2 rounded-xl border-gray-600"
-            />{" "}
-            <input
-              type="password"
-              placeholder="비밀번호"
-              className="w-full p-3 mb-2 border-2 border-gray-600 rounded-xl text-gray-800 placeholder-gray-400 bg-white "
-              style={{ color: "black" }}
-            />
-            <div className="flex justify-end">
-              <BasicButton color={"#33ffc5"}>sign-in</BasicButton>
+            <BasicInput type={"text"} id={"memberId"}>
+              아이디
+            </BasicInput>
+            <BasicInput type={"password"} id={"memberPw"}>
+              비밀번호
+            </BasicInput>
+            <BasicInput type={"password"} id={"checkPw"}>
+              비밀번호 확인
+            </BasicInput>
+            <BasicInput type={"text"} id={"memberName"}>
+              이름
+            </BasicInput>
+            <BasicInput type={"text"} id={"memberEmail"}>
+              이메일
+            </BasicInput>
+            <div className="flex justify-end mt-3">
+              <BasicButton color={"#9be0fd"}>회원가입</BasicButton>
             </div>
           </form>
         </div>
