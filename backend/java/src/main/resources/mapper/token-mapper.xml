@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.throwjava.web.token.model.dao.TokenMapper">
+
+  <insert id="saveToken"
+          parameterType="com.throwjava.web.token.model.vo.RefreshToken">
+    INSERT INTO
+      TJ_TOKEN
+    VALUES (
+        #{token}
+      , #{username}
+      , #{expiration}
+    )
+  </insert>
+
+  <select id="selectByToken"
+          parameterType="com.throwjava.web.token.model.vo.RefreshToken">
+    SELECT
+        TOKEN
+      , MEMBER_ID username
+      , EXPIRATION
+    FROM
+        TJ_TOKEN
+    WHERE
+        TOKEN = #{token}
+  </select>
+
+  <delete id="deleteExpiredRefreshToken"
+          parameterType="long">
+    DELETE
+      FROM
+            TJ_TOKEN
+    WHERE
+            EXPIRATION <![CDATA[<]]> #{now}
+  </delete>
+</mapper>
