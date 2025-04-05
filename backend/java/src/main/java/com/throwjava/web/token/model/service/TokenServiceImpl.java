@@ -37,7 +37,7 @@ public class TokenServiceImpl implements TokenService {
     RefreshToken token = RefreshToken.builder().token(refreshToken).build();
 
     RefreshToken responseToken = tokenMapper.selectByToken(token);
-    if (responseToken == null || token.getExpiration() < System.currentTimeMillis()) {
+    if (responseToken == null || token.getExpiration() <= System.currentTimeMillis()) {
       throw new InvalidTokenException("유효하지 않은 토큰");
     }
 
