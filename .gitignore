@@ -62,7 +62,4 @@ out/
 .vscode/
 .DS_Store
 
-## config files ##
-.properties
-*.yml
 
