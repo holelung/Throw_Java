@@ -1,16 +1,43 @@
 // src/pages/PostQuestionPage.jsx
 
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const PostQuestionPage = () => {
+  const { auth } = useContext(AuthContext);
+  const navi = useNavigate();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tags, setTags] = useState("");
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      alert("로그인이 필요합니다!");
+      navi("/sign-in");
+    }
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("제출됨:", { title, body, tags });
     // TODO: 백엔드 연동 or 유효성 검사
+    axios.post("http://localhost/boards/questions", {
+      questionTitle: title,
+      questionContent: body,
+    }, {
+      headers: {
+        Authorization: `Bearer ${auth.authTokens.accessToken}`,
+      },
+    }).then((response) => {
+      if (response.status == 201) {
+        alert("질문이 등록되었습니다.");
+        navi("/");
+      }
+    }).catch((error) => {
+
+    })
   };
 
   return (

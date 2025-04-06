@@ -15,22 +15,22 @@ const Footer = () => {
             </div>
           </li>
           <li className="footer-item">
-            <a href="#" class="nav-link px-2 text-body-secondary">
+            <a href="#" className="nav-link px-2 text-body-secondary">
               Questions
             </a>
           </li>
           <li className="footer-item">
-            <a href="#" class="nav-link px-2 text-body-secondary">
+            <a href="#" className="nav-link px-2 text-body-secondary">
               Help
             </a>
           </li>
           <li className="footer-item">
-            <a href="#" class="nav-link px-2 text-body-secondary">
+            <a href="#" className="nav-link px-2 text-body-secondary">
               FAQs
             </a>
           </li>
           <li className="footer-item">
-            <a href="#" class="nav-link px-2 text-body-secondary">
+            <a href="#" className="nav-link px-2 text-body-secondary">
               About
             </a>
           </li>

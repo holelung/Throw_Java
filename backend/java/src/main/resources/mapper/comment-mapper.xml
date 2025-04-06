@@ -2,5 +2,90 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.throwjava.web.comment.model.dao.CommentMapper">
 
+    <insert id="insertCommentToQuestion">
+        INSERT INTO 
+            TJ_Q_COMMENT ( 
+                COMMENT_NO,
+                QUESTION_NO,
+                COMMENT_WRITER,
+                COMMENT_CONTENT
+            )
+        VALUES (
+            SEQ_CMT.NEXTVAL,
+            #{ refBoardNo },
+            #{ commentWriter },
+            #{ commentContent }
+        )
+    </insert>
+
+
+    <insert id="insertCommentToAnswer">
+        INSERT INTO
+            TJ_A_COMMENT(
+                COMMENT_NO ,
+                ANSWER_NO ,
+                COMMENT_WRITER ,
+                COMMENT_CONTENT 
+            )
+        VALUES (
+            SEQ_CMT.NEXTVAL,
+            #{ refBoardNo },
+            #{ commentWriter },
+            #{ commentContent }
+        )
+    </insert>
+
+    <select id="selectQuestionCommentList">
+        SELECT
+            COMMENT_NO commentNo,
+            COMMENT_WRITER commentWriter,
+            COMMENT_CONTENT commentContent,
+            CREATE_TIME createTime
+        FROM
+            TJ_Q_COMMENT
+        WHERE
+            QUESTION_NO = #{refBoardNo}
+        ORDER BY
+            CREATE_TIME DESC
+    </select>
+
+    <select id="selectAnswerCommentList">
+        SELECT
+            COMMENT_NO commentNo,
+            COMMENT_WRITER commentWriter,
+            COMMENT_CONTENT commentContent,
+            CREATE_TIME createTime
+        FROM
+            TJ_A_COMMENT
+        WHERE
+            ANSWER_NO = #{refBoardNo}
+        ORDER BY
+            CREATE_TIME DESC
+    </select>
+
+<!-- 수정 삭제 -->
+    <update id="updateQuestionComment">
+        UPDATE TJ_Q_COMMENT
+        SET COMMENT_CONTENT = #{commentContent}
+        WHERE COMMENT_NO = #{ commentNo }
+    </update>
+
+    <update id="updateAnswerComment">
+        UPDATE TJ_A_COMMENT
+        SET COMMENT_CONTENT = #{commentContent}
+        WHERE COMMENT_NO = #{ commentNo }
+    </update>
+
+    <update id="deleteQuestionComment">
+        UPDATE TJ_Q_COMMENT
+        SET IS_DELETED = 'Y'
+        WHERE COMMENT_NO = #{ commentNo }
+    </update>
+
+    <update id="deleteAnswerComment">
+        UPDATE TJ_A_COMMENT
+        SET IS_DELETED = 'Y'
+        WHERE COMMENT_NO = #{ commentNo }
+    </update>
 
 </mapper>

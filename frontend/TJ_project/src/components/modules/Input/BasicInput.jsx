@@ -1,4 +1,4 @@
-const BasicInput = ({ children, type, id }) => {
+const BasicInput = ({ children, type, id , onChange }) => {
   return (
     <>
       <div className="form-floating flex flex-col my-2 mx-1">
@@ -7,6 +7,7 @@ const BasicInput = ({ children, type, id }) => {
           type={type}
           id={id}
           placeholder={children}
+          onChange={onChange}
           className="p-3 border rounded-2xl"
         />
       </div>

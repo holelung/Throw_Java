@@ -3,8 +3,10 @@ package com.throwjava.web.board.model.service;
 import java.util.List;
 
 import com.throwjava.web.board.model.dto.AnswerDTO;
+import com.throwjava.web.board.model.dto.AnswerDeleteDTO;
 import com.throwjava.web.board.model.dto.AnswerDetailDTO;
 import com.throwjava.web.board.model.dto.QuestionDTO;
+import com.throwjava.web.board.model.dto.QuestionDeleteDTO;
 import com.throwjava.web.board.model.dto.QuestionDetailDTO;
 
 public interface BoardService {
@@ -14,6 +16,8 @@ public interface BoardService {
     void answerSave(AnswerDTO answer);
 
     void memberSaveQuestion(Long questionNo);
+
+    void deleteSaveQuestion(Long questionNo);
 
     List<QuestionDetailDTO> selectAll(int pageNo);
 
@@ -27,24 +31,22 @@ public interface BoardService {
 
     void questionUpdate(QuestionDTO question);
 
-    void deleteQuestionById(Long questionNo);
+    void deleteQuestionById(QuestionDeleteDTO question);
 
     void answerUpdate(AnswerDTO answer);
 
-    void deleteAnswerById(Long answerNo);
+    void deleteAnswerById(AnswerDeleteDTO answer);
 
-    void increaseViewCount(Long questionNo);
+    void questionRecommend(QuestionDeleteDTO questionResponse);
 
-    void questionRecommend(QuestionDTO questionResponse);
+    void questionNonRecommend(QuestionDeleteDTO questionResponse);
 
-    void questionNonRecommend(QuestionDTO questionResponse);
+    void questionDeleteResponse(QuestionDeleteDTO questionResponse);
 
-    void questionDeleteResponse(QuestionDTO questionResponse);
+    void answerRecommend(AnswerDeleteDTO answerResponse);
 
-    void answerRecommend(AnswerDTO answerResponse);
+    void answerNonRecommend(AnswerDeleteDTO answerResponse);
 
-    void answerNonRecommend(AnswerDTO answerResponse);
-
-    void answerResponse(AnswerDTO answerResponse);
+    void answerDeleteResponse(AnswerDeleteDTO answerResponse);
     
 }

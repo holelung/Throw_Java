@@ -17,7 +17,7 @@
             SELECT SUM(
                 CASE
                     WHEN RECOMMEND_STATUS = 'Y' THEN 1
-                    WHEN RECOMMEND_STATUS = 'D' THEN -1
+                    WHEN RECOMMEND_STATUS = 'N' THEN -1
                     ELSE 0
                 END
             )
@@ -71,6 +71,23 @@
         INSERT INTO TJ_QUESTION_SAVE
         VALUES( #{ memberId}, #{questionNo} )
     </insert>
+    <!-- 저장 목록에서 삭제 -->
+    <delete id="deleteSaveQuestion">
+        DELETE FROM TJ_QUESTION_SAVE
+        WHERE MEMBER_ID = #{memberId} AND QUESTION_NO = #{questionNo}
+    </delete>
+    <!-- 저장조회 -->
+    <select id="isSave"
+            resultType="string">
+        SELECT
+            MEMBER_ID
+        FROM
+            TJ_QUESTION_SAVE
+        WHERE
+            MEMBER_ID = #{memberId}
+        AND
+            QUESTION_NO = #{questionNo}
+    </select>
 
     <!-- 조회수 증가 -->
     <update id="increaseViewCount">
@@ -95,7 +112,7 @@
         FROM TJ_QUESTION_SAVE S
         JOIN TJ_QUESTION Q ON S.QUESTION_NO = Q.QUESTION_NO
         JOIN TJ_MEMBER M ON Q.MEMBER_ID = M.MEMBER_ID
-        WHERE S.MEMBER_ID = #{memberId}
+        WHERE S.MEMBER_ID = #{memberId} AND IS_DELETED = 'N'
         ORDER BY Q.CREATE_TIME DESC
     </select>
 
@@ -131,7 +148,7 @@
                 SELECT SUM(
                     CASE
                         WHEN RECOMMEND_STATUS = 'Y' THEN 1
-                        WHEN RECOMMEND_STATUS = 'D' THEN -1
+                        WHEN RECOMMEND_STATUS = 'N' THEN -1
                         ELSE 0
                     END
                 )
@@ -144,7 +161,138 @@
             TJ_MEMBER M ON A.MEMBER_ID = M.MEMBER_ID
         WHERE
             A.REF_BOARD_NO = #{ questionNo }
+        AND
+            A.IS_DELETED = 'N'
         ORDER BY 
             A.CREATE_TIME DESC
     </select>
+
+    <!-- 수정 -->
+    <update id="questionUpdate">
+        UPDATE TJ_QUESTION
+        SET 
+            QUESTION_TITLE = #{ questionTitle },
+            QUESTION_CONTENT = #{ questionContent},
+            MODIFIED_TIME = #{ modifiedTime }
+        WHERE
+            QUESTION_NO = #{ questionNo }    
+    </update>
+
+    <update id="answerUpdate">
+        UPDATE TJ_ANSWER
+        SET ANSWER_CONTENT = #{ answerContent }
+        WHERE ANSWER_NO = #{ answerNo }
+    </update>
+
+
+    <!-- 삭제 -->
+    <update id="deleteQuestionById">
+        UPDATE TJ_QUESTION
+        SET 
+            IS_DELETED = 'Y'
+        WHERE
+            QUESTION_NO = #{ questionNo }
+    </update>
+
+    <update id="deleteAnswerById">
+        UPDATE TJ_ANSWER
+        SET 
+            IS_DELETED = 'Y'
+        WHERE 
+            ANSWER_NO = #{ answerNo }
+    </update>
+
+    <!-- 추천 비추천 처리!@ -->
+    <!-- 질문용 -->
+    <insert id="questionResponseGen">
+        INSERT INTO 
+            TJ_QUESTION_RECOMMEND
+        VALUES (
+            #{memberId},
+            #{questionNo},
+            DEFAULT
+        )
+    </insert>
+    <select id="isQuestionRecommend">
+        SELECT
+            COUNT(*)
+        FROM
+            TJ_QUESTION_RECOMMEND
+        WHERE 
+            MEMBER_ID = #{ memberId }
+        AND
+            QUESTION_NO = #{ questionNo }
+    </select>
+
+    <update id="questionRecommend">
+        UPDATE TJ_QUESTION_RECOMMEND
+        SET RECOMMEND_STATUS = 'Y'
+        WHERE 
+            MEMBER_ID = #{ memberId }
+        AND
+            QUESTION_NO = #{ questionNo }
+    </update>
+    <update id="questionNonRecommend">
+        UPDATE TJ_QUESTION_RECOMMEND
+        SET RECOMMEND_STATUS = 'N'
+        WHERE
+            MEMBER_ID = #{ memberId }
+        AND
+            QUESTION_NO = #{ questionNo }
+    </update>
+    <update id="questionDeleteResponse">
+        UPDATE TJ_QUESTION_RECOMMEND
+        SET RECOMMEND_STATUS = 'E'
+        WHERE
+            MEMBER_ID = #{ memberId }
+        AND
+            QUESTION_NO = #{ questionNo }
+    </update>
+
+    <!-- 답변용~ -->
+    <insert id="answerResponseGen">
+        INSERT INTO
+            TJ_ANSWER_RECOMMEND
+        VALUES (
+            #{memberId},
+            #{answerNo},
+            DEFAULT
+        )
+    </insert>
+    <select id="isAnswerRecommend">
+        SELECT
+            COUNT(*)
+        FROM
+            TJ_ANSWER_RECOMMEND
+        WHERE
+            MEMBER_ID = #{ memberId }
+        AND
+            ANSWER_NO = #{ answerNo }
+    </select>
+
+    <update id="answerRecommend">
+        UPDATE TJ_ANSWER_RECOMMEND
+        SET RECOMMEND_STATUS = 'Y' 
+        WHERE
+            MEMBER_ID = #{ memberId }
+        AND
+            ANSWER_NO = #{ answerNo }
+    </update>
+    <update id="answerNonRecommend">
+        UPDATE TJ_ANSWER_RECOMMEND
+        SET RECOMMEND_STATUS = 'N'
+        WHERE
+            MEMBER_ID = #{ memberId }
+        AND
+            ANSWER_NO = #{ answerNo }
+    </update>
+    <update id="answerDeleteResponse">
+        UPDATE TJ_ANSWER_RECOMMEND
+        SET RECOMMEND_STATUS = 'D'
+        WHERE
+            MEMBER_ID = #{ memberId }
+        AND
+            ANSWER_NO = #{ answerNo }
+    </update>
+
 </mapper>

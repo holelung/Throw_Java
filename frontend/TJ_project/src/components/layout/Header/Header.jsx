@@ -4,10 +4,11 @@ import { styled } from "styled-components";
 import "./Header.css";
 import BasicButton from "../../modules/Button/BasicButton";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SignIn from "../Auth/SignIn/SignIn";
 import SignUp from "../Auth/SignUp/SignUp";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
 
 const StyledTitle = styled.p`
   font-size: 32px;
@@ -17,8 +18,8 @@ const StyledTitle = styled.p`
 `;
 
 const Header = () => {
+  const { auth, logout } = useContext(AuthContext);
   const navi = useNavigate();
-
   const [isSignUpOpen, setSignUpOpen] = useState(false);
 
   return (
@@ -54,21 +55,25 @@ const Header = () => {
             </svg>
           </div>
           <div className="user-buttons ">
-            <div className="before-sign-in">
-              {/* 로그인 이전 */}
-              <BasicButton onClick={() => navi("/sign-in")}>
-                sign-in
-              </BasicButton>
-              <BasicButton
-                onClick={() => setSignUpOpen(true)}
-                color={"#9be0fd"}
-              >
-                sign Up
-              </BasicButton>
-            </div>
-
-            {/* 로그인 이후 */}
-            <div className="after-sign-in section-none"></div>
+            {!auth.isAuthenticated ? (
+              <>
+                {/* 로그인 이전 */}
+                <BasicButton onClick={() => navi("/sign-in")}>
+                  sign-in
+                </BasicButton>
+                <BasicButton
+                  onClick={() => setSignUpOpen(true)}
+                  color={"#9be0fd"}
+                >
+                  sign Up
+                </BasicButton>
+              </>
+            ) : (
+              <>
+                <BasicButton>마이페이지</BasicButton>
+                <BasicButton color={"#C70039"} onClick={logout}>로그아웃</BasicButton>
+              </>
+            )}
           </div>
         </div>
       </header>

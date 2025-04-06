@@ -1,27 +1,28 @@
 import "./Board.css";
 
-const Board = ({ onClick }) => {
+const Board = ({ onClick, question }) => {
   return (
     <>
-      <div className="board-container" onClick={onClick}>
+      <div
+        key={question.questionNo}
+        className="board-container"
+        onClick={onClick}
+      >
         <div className="board-data">
           <div className="board-stats">
-            <p>1 votes</p>
-            <p>2 answers</p>
-            <p>31 views</p>
+            <p>{question.recommendScore} votes</p>
+            <p>{question.answerCount} answers</p>
+            <p>{question.viewCount} views</p>
           </div>
           <div className="board-info">
-            <p className="board-title">
-              JAVA main thread waiting for executor service
-            </p>
-            <p className="board-content">
-              Is there a way to print "noise3" before all the "Aroma" are
-              printed? The rest of the main method always waits for the
-              executorservice shutdown, but I want them to run ...
-            </p>
+            <p className="board-title">{question.questionTitle}</p>
+            <p className="board-content">{question.questionContent}</p>
             <div className="tags-and-info">
-              <div className="tag-area">Java</div>
-              <div className="writers-info">user/ 32asked/ 3 mins ago</div>
+              <div className="writers-info text-xs text-gray-500 mt-2">
+                Asked by{" "}
+                <span className="text-blue-500">{question.memberId}</span> ·{" "}
+                {question.createTime}
+              </div>
             </div>
           </div>
         </div>

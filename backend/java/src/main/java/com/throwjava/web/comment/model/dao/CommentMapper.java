@@ -16,17 +16,17 @@ public interface CommentMapper {
     void insertCommentToAnswer(Comment comment);
 
     /* GET */
-    List<CommentDTO> selectQuestionCommentList(Long questionNo);
+    List<CommentDTO> selectQuestionCommentList(Long refBoardNo);
 
-    List<CommentDTO> selectAnswerCommentLists(Long answerNo);
+    List<CommentDTO> selectAnswerCommentList(Long refBoardNo);
 
     /* UPDATE */
     void updateQuestionComment(Comment comment);
 
     void updateAnswerComment(Comment comment);
 
-    void deleteQuestionComment(Comment comment);
+    void deleteQuestionComment(Long commentNo);
 
-    void deleteAnswerComment(Comment comment);
+    void deleteAnswerComment(Long commentNo);
 
 }

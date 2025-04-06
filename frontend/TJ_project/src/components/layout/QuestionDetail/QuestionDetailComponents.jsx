@@ -12,13 +12,10 @@ export const QuestionHeader = ({ title, createdAt, modifiedAt, views }) => (
   </div>
 );
 
-export const QuestionContent = ({ body, code }) => (
+export const QuestionContent = ({ body }) => (
   <div className="prose max-w-none">
     <div className="prose max-w-none">
       <ReactMarkdown>{body}</ReactMarkdown>
-      <SyntaxHighlighter language="java" style={oneDark} className="rounded-md">
-        {code}
-      </SyntaxHighlighter>
     </div>
   </div>
 );
@@ -41,28 +38,3 @@ export const CommentsList = ({ comments }) => (
   </div>
 );
 
-export const AnswerList = ({ answers }) => (
-  <div className="mt-10">
-    <h2 className="text-xl font-semibold mb-4">{answers.length} Answers</h2>
-    <div className="space-y-8">
-      {answers.map((answer) => (
-        <div key={answer.id} className="border-t pt-4">
-          <div className="prose max-w-none">
-            <ReactMarkdown>{answer.body}</ReactMarkdown>
-            <SyntaxHighlighter
-              language="java"
-              style={oneDark}
-              className="rounded-md"
-            >
-              {answer.code}
-            </SyntaxHighlighter>
-          </div>
-          <div className="text-xs text-gray-500 mt-2">
-            answered by <span className="text-blue-500">{answer.user}</span> ·{" "}
-            {answer.time}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
