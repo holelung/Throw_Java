@@ -3,7 +3,9 @@ package com.throwjava.web.board.model.service;
 import java.util.List;
 
 import com.throwjava.web.board.model.dto.AnswerDTO;
+import com.throwjava.web.board.model.dto.AnswerDetailDTO;
 import com.throwjava.web.board.model.dto.QuestionDTO;
+import com.throwjava.web.board.model.dto.QuestionDetailDTO;
 
 public interface BoardService {
     
@@ -11,15 +13,17 @@ public interface BoardService {
 
     void answerSave(AnswerDTO answer);
 
-    List<QuestionDTO> selectAll(int pageNo);
+    void memberSaveQuestion(Long questionNo);
 
-    List<QuestionDTO> selectByViewCount(int pageNo);
+    List<QuestionDetailDTO> selectAll(int pageNo);
 
-    List<QuestionDTO> selectBySave(int pageNo);
+    List<QuestionDetailDTO> selectByViewCount(int pageNo);
 
-    QuestionDTO selectQuestionById(Long questionNo);
+    List<QuestionDetailDTO> selectBySave(int pageNo);
 
-    List<AnswerDTO> selectAnswerByQuestionNo(Long questionNo);
+    QuestionDetailDTO selectQuestionById(Long questionNo);
+
+    List<AnswerDetailDTO> selectAnswerByQuestionNo(Long questionNo);
 
     void questionUpdate(QuestionDTO question);
 

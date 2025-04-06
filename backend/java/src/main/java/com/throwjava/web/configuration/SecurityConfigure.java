@@ -41,9 +41,9 @@ public class SecurityConfigure {
           requests.requestMatchers(HttpMethod.POST, "/auth/login", "/members").permitAll();
           requests.requestMatchers("/admin/**").hasRole("ADMIN");
           requests.requestMatchers(HttpMethod.GET, "/boards/**", "/boards/**", "/comments/**").permitAll();
-          requests.requestMatchers(HttpMethod.PUT, "/members/**", "/boards/**", "/comments/**").permitAll();
-          requests.requestMatchers(HttpMethod.DELETE, "/members", "/boards/**", "/comments/**").permitAll();
-          requests.requestMatchers(HttpMethod.POST, "/boards", "/boards/**", "/comments/**").permitAll();
+          requests.requestMatchers(HttpMethod.PUT, "/members/**", "/boards/**", "/comments/**").authenticated();
+          requests.requestMatchers(HttpMethod.DELETE, "/members", "/boards/**", "/comments/**").authenticated();
+          requests.requestMatchers(HttpMethod.POST, "/boards", "/boards/**", "/comments/**").authenticated();
         })
         .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

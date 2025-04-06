@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.throwjava.web.board.model.dao.BoardMapper">
+    <sql id="questionColumn">
+        SELECT
+        Q.QUESTION_NO AS questionNo,
+        Q.QUESTION_TITLE AS questionTitle,
+        Q.QUESTION_CONTENT AS questionContent,
+        Q.CREATE_TIME AS createTime,
+        Q.VIEW_COUNT AS viewCount,
+        Q.MODIFIED_TIME AS modifiedTime,
 
-    <!-- 글작성 -->
+        M.MEMBER_ID AS memberId,
+        M.MEMBER_NAME AS memberName,
+
+        NVL((
+            SELECT SUM(
+                CASE
+                    WHEN RECOMMEND_STATUS = 'Y' THEN 1
+                    WHEN RECOMMEND_STATUS = 'D' THEN -1
+                    ELSE 0
+                END
+            )
+            FROM TJ_QUESTION_RECOMMEND R
+            WHERE R.QUESTION_NO = Q.QUESTION_NO
+        ), 0) AS recommendScore,
+
+        NVL((
+            SELECT COUNT(*)
+            FROM TJ_ANSWER A
+            WHERE A.REF_BOARD_NO = Q.QUESTION_NO
+        ), 0) AS answerCount
+    </sql>
+
+    <!-- 질문 작성 -->
     <insert id="questionSave"
             parameterType="com.throwjava.web.board.model.vo.Question">
         INSERT
@@ -19,6 +49,7 @@
         )
     </insert>
 
+    <!-- 답변 작성 -->
     <insert id="answerSave"
             parameterType="com.throwjava.web.board.model.vo.Answer">
         INSERT
@@ -35,5 +66,85 @@
         )
     </insert>
 
+    <!-- 질문 저장목록에 저장하기 -->
+    <insert id="memberSaveQuestion">
+        INSERT INTO TJ_QUESTION_SAVE
+        VALUES( #{ memberId}, #{questionNo} )
+    </insert>
 
+    <!-- 조회수 증가 -->
+    <update id="increaseViewCount">
+        UPDATE TJ_QUESTION
+        SET VIEW_COUNT = VIEW_COUNT + 1
+        WHERE QUESTION_NO = #{questionNo}
+    </update>
+
+    <!-- 조회 -->
+    <select id="selectAll" 
+            resultType="com.throwjava.web.board.model.dto.QuestionDetailDTO">
+        <include refid="questionColumn" />
+        FROM TJ_QUESTION Q
+        JOIN TJ_MEMBER M ON Q.MEMBER_ID = M.MEMBER_ID
+        WHERE IS_DELETED = 'N'
+        ORDER BY Q.CREATE_TIME DESC
+    </select>
+
+    <!-- 저장한 게시물 조회 -->
+    <select id="selectBySave" resultType="com.throwjava.web.board.model.dto.QuestionDetailDTO">
+        <include refid="questionColumn" />
+        FROM TJ_QUESTION_SAVE S
+        JOIN TJ_QUESTION Q ON S.QUESTION_NO = Q.QUESTION_NO
+        JOIN TJ_MEMBER M ON Q.MEMBER_ID = M.MEMBER_ID
+        WHERE S.MEMBER_ID = #{memberId}
+        ORDER BY Q.CREATE_TIME DESC
+    </select>
+
+    <!-- 인기 게시글 조회 -->
+    <select id="selectByViewCount"
+            resultType="com.throwjava.web.board.model.dto.QuestionDetailDTO">
+        <include refid="questionColumn" />
+        FROM TJ_QUESTION Q
+        JOIN TJ_MEMBER M ON Q.MEMBER_ID = M.MEMBER_ID
+        WHERE Q.IS_DELETED = 'N'
+        ORDER BY Q.VIEW_COUNT DESC
+    </select>
+
+    <!-- 상세 조회 -->
+    <select id="selectQuestionById">
+        <include refid="questionColumn" />
+        FROM TJ_QUESTION Q
+        JOIN TJ_MEMBER M ON Q.MEMBER_ID = M.MEMBER_ID
+        WHERE IS_DELETED = 'N' AND Q.QUESTION_NO = #{questionNo}
+    </select>
+
+    <!-- 답변 조회 -->
+    <select id="selectAnswerByQuestionNo"
+            resultType="com.throwjava.web.board.model.dto.AnswerDetailDTO">
+        SELECT
+            A.ANSWER_NO answerNo,
+            A.ANSWER_CONTENT answerContent,
+            A.CREATE_TIME createTime,
+            M.MEMBER_ID memberId,
+            M.MEMBER_NAME memberName,
+            A.REF_BOARD_NO refBoardNo,
+            NVL((
+                SELECT SUM(
+                    CASE
+                        WHEN RECOMMEND_STATUS = 'Y' THEN 1
+                        WHEN RECOMMEND_STATUS = 'D' THEN -1
+                        ELSE 0
+                    END
+                )
+                FROM TJ_ANSWER_RECOMMEND R
+                WHERE R.ANSWER_NO = A.ANSWER_NO
+            ), 0) AS recommendScore
+        FROM
+            TJ_ANSWER A
+        JOIN
+            TJ_MEMBER M ON A.MEMBER_ID = M.MEMBER_ID
+        WHERE
+            A.REF_BOARD_NO = #{ questionNo }
+        ORDER BY 
+            A.CREATE_TIME DESC
+    </select>
 </mapper>
